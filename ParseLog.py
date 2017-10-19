@@ -55,6 +55,22 @@ def extract_request_and_response(file_name, start_time, end_time):
     return request_list, response_list
 
 
+def save_request(request_list, root_dir):
+    if len(request_list) <= 0:
+        return
+
+    if os.path.exists(root_dir):
+        shutil.rmtree(root_dir)
+    os.mkdir(root_dir)
+
+    for i, request in enumerate(request_list):
+        file_name = os.path.join(root_dir, str(i))
+        file_name += '.json'
+        f = open(file_name, 'w')
+        f.write(request)
+        f.close()
+
+
 def download_ref_and_test_images(request_list, root_dir):
     if len(request_list) <= 0:
         return
@@ -105,4 +121,5 @@ end_time = time.mktime(time.strptime(end_time_str, '%Y%m%d%H%M%S'))
 
 log_file_name = 'C:\\Users\\Wenba\\Desktop\\logfile-2'
 request_list, response_list = extract_request_and_response(log_file_name, start_time, end_time)
-download_ref_and_test_images(request_list, 'local')
+# download_ref_and_test_images(request_list, 'local')
+save_request(request_list, 'local')
